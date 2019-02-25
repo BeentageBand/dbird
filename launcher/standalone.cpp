@@ -39,8 +39,8 @@ int main(void)
 
     //Dispatching
     Dispatcher dispatcher;
-    dispatcher.append(push_data_app);
     dispatcher.append(read_data_app);
+    dispatcher.append(push_data_app);
     
     //Run
     Worker worker(dispatcher);

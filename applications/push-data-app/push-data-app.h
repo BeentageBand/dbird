@@ -24,8 +24,9 @@ namespace application
         : data_access_service(&data_access_service), connection_service(&connection_service)
         {}
 
-        void on_message(ipc::Message const msg)
+        void on_message(ipc::Message const & msg)
         {
+            std::cout << "push-data-app::" << __func__ << std::endl;
             this->handle_message(msg);
         }
 

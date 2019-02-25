@@ -25,6 +25,7 @@ namespace application
 
         void on_message(ipc::Message const & msg)
         {
+            std::cout << "read-data-app::" << __func__ << std::endl;
             this->handle_message(msg);
         }
 
