@@ -30,7 +30,7 @@ namespace application
 
         void handle_message(ipc::Message const & msg)
         {
-            std::cout << "push-data-app::" << __func__ << std::endl;
+            std::cout << "read-data-app::" << __func__ << std::endl;
             std::vector<bird::Checkin_Bundle> all_checkin_bundles = 
                                             this->data_reader_service->get_all_checkin_bundles();
             if(all_checkin_bundles.empty()) return ;
