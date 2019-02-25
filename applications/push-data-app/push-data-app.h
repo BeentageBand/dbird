@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include "bird-mids.h"
 #include "checkin-bundle.h"
@@ -30,6 +31,7 @@ namespace application
 
         void handle_message(ipc::Message const & msg)
         {
+            std::cout << "push-data-app::" << __func__ << std::endl;
             std::vector<bird::Checkin_Bundle> all_checkin_bundles = 
                                             this->data_access_service->get_all_checkin_bundles();
             if(all_checkin_bundles.empty()) return ;

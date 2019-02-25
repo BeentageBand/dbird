@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "bundle.h"
 #include "ipc/message.h"
 
@@ -16,6 +17,7 @@ namespace worker
 
         void runnable(void)
         {
+            std::cout << "Worker::" << __func__<< std::endl;
             this->bundle->on_start();
 
             do

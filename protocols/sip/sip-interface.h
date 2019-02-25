@@ -8,7 +8,7 @@ namespace protocols
         public:
         virtual ~SIP_Interface(void){}
 
-        virtual bool empty(void) {return false;}
+        virtual bool empty(void) {return true;}
         virtual std::string read(void)
         {
             return std::string("account_id-00/00/00-00:00:00");
