@@ -1,4 +1,3 @@
-#include "checkin-bundle-parser.h"
 #include "checkin-bundle-parser-json.h"
 #include "checkin-bundle-parser-sip-block.h"
 #include "connection-service/connection-http.h"
@@ -7,6 +6,7 @@
 #include "persistency/checkin-bundle-access-fs.h"
 #include "push-data-app/push-data-app.h"
 #include "read-data-app/read-data-app.h"
+#include "worker/dispatcher.h"
 
 using namespace bird;
 using namespace application;
@@ -39,10 +39,13 @@ int main(void)
 
     Worker workers[] = {Worker(push_data_app), Worker(read_data_app)};
 
+    //Dispatching
+    Dispatcher dispatcher;
+    dispatcher.append(push_data_app);
+    dispatcher.append(read_data_app);
+    
     //Run
-    for(auto & worker : workers)
-    {
-        worker.runnable();
-    }
+    Worker worker(dispatcher);
+    worker.runnable();
     return 0;
 }

@@ -16,7 +16,7 @@ namespace worker
 
         void append(Bundle & bundle)
         {
-            this->bundles->push_back(&bundle);
+            this->bundles.push_back(&bundle);
         }
 
         void on_start(void)

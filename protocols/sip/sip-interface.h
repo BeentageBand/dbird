@@ -14,5 +14,6 @@ namespace protocols
             return std::string("account_id-00/00/00-00:00:00");
         }
 
+        virtual void write(std::string const & data) {}
     };
 }
