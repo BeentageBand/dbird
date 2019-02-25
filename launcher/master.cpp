@@ -30,13 +30,14 @@ int main(void)
     Checkin_Bundle_Parser_SIP_Block checkin_bundle_parser_sip_block;
     HTTP_Interface http;
     SIP_Interface sip;
+    Modem_Interface modem;
 
     //Services
     Connection_HTTP connection_service(http, checkin_bundle_parser_json);
     Data_Access_Persistency data_access_service(checkin_bundle_access_fs);
     Data_Reader_SIP data_reader_service(sip, checkin_bundle_parser_sip_block);
-    Server_Master_Slave server_master_slave_service;
-    Server_Master_Slave server_modem_service;
+    Server_Master_Slave server_master_slave_service(sip);
+    Server_Modem server_modem_service(modem);
 
     //Applications
     Connection_Manager_App connection_mgr_modem_app(server_modem_service);

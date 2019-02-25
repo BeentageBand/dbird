@@ -31,7 +31,7 @@ int main(void)
     Connection_SIP connection_service(sip, checkin_bundle_parser_sip_block);
     Data_Access_Persistency data_access_service(checkin_bundle_access_volatile);
     Data_Reader_SIP data_reader_service(sip, checkin_bundle_parser_sip_block);
-    Server_Master_Slave server_service;
+    Server_Master_Slave server_service(sip);
 
     //Applications
     Connection_Manager_App connection_manager_app(server_service);
