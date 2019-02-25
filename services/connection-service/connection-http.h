@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "connection-interface.h"
-#include "http/http.h"
+#include "http/http-interface.h"
 
 namespace service
 {
@@ -10,10 +10,10 @@ namespace service
     {
         private:
         size_t const PACKAGE_SIZE_BYTES = 100;
-        protocols::HTTP * http;
+        protocols::HTTP_Interface * http;
         bird::Checkin_Bundle_Parser * checkin_bundle_parser;
         public:
-        Connection_HTTP(protocols::HTTP & http, bird::Checkin_Bundle_Parser & checkin_bundle_parser)
+        Connection_HTTP(protocols::HTTP_Interface & http, bird::Checkin_Bundle_Parser & checkin_bundle_parser)
         : http(&http), checkin_bundle_parser(&checkin_bundle_parser)
         {}
 

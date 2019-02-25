@@ -5,7 +5,7 @@
 
 namespace bird
 {
-    class Checkin_Bundle_Parser_Mifare_Block : public Checkin_Bundle_Parser
+    class Checkin_Bundle_Parser_SIP_Block : public Checkin_Bundle_Parser
     {
         public:
         Checkin_Bundle parse_to_checkin_bundle(std::string const & data)

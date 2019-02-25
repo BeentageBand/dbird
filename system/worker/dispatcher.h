@@ -1,13 +1,12 @@
 #pragma once
+#include <vector>
 #include "bundle.h"
-#include "meta/subscribable.h"
-
 namespace worker
 {
     class Dispatcher : public Bundle
     {
         private:
-        meta::Subscribable<Bundle *> bundles;
+        std::vector<Bundle *> bundles;
         public:
         Dispatcher(void)
         : bundles()
@@ -15,20 +14,42 @@ namespace worker
 
         virtual ~Dispatcher(void){}
 
-        void subscribe(Bundle & bundle)
+        void append(Bundle & bundle)
         {
-            this->bundles->subscribe(bundle);
-        }
-
-        void unsubscribe(Bundle & bundle)
-        {
-            this->bundles->unsubscribe(bundle);
+            this->bundles->push_back(&bundle);
         }
 
         void on_start(void)
         {
-
+            for(auto & bundle : this->bundles)
+            {
+                bundle->on_start();
+            }
         }
 
+        void on_message(ipc::Message const & msg)
+        {
+            for(auto & bundle : this->bundles)
+            {
+                bundle->on_message(msg);
+            }
+        }
+
+        void on_loop(void)
+        {
+            for(auto & bundle : this->bundles)
+            {
+                bundle->on_loop();
+            }
+        }
+
+        void on_stop(void)
+        {
+            for(auto & bundle : this->bundles)
+            {
+                bundle->on_stop();
+            }
+            this->bundles.clear();
+        }
     };
 }

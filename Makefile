@@ -1,26 +1,30 @@
+export OUTDIR=out
 export SUBDIR=\
 applications \
 bird-types \
 launcher \
+persistency \
 protocols \
 services  \
 system  \
 utilities \
 
 export CXXFLAGS+=-std=c++11 
-export BINARY=standalone
+export BINARY=standalone slave master
 export LDFLAGS+=
 
-.PHONY : all clean
+.PHONY : all clean $(BINARY) 
 all : $(BINARY) 
 
+$(BINARY) : $(BINARY:%=$(OUTDIR)/%)
+
 clean : 
-	rm $(BINARY) $(BINARY:%=launcher/%.o)
+	rm $(BINARY:%=$(OUTDIR)/%.o) $(BINARY:%=$(OUTDIR)/%)
 
-$(BINARY) : $(BINARY:%=launcher/%.o)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+$(OUTDIR)/% : $(OUTDIR)/%.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $<
 
-$(BINARY:%=launcher/%.o) :
+$(BINARY:%=$(OUTDIR)/%.o) :
 	$(MAKE) -C launcher 
 
 
