@@ -1,7 +1,7 @@
 OBJ=$(wildcard *.cpp)
 
-all : $(OBJ:.cpp=.o)
+all : $(OBJ:%.cpp=../$(OUTDIR)/%.o)
 
-%.o : %.cpp
+../$(OUTDIR)/%.o : %.cpp
 	-$(CXX) -E $(CXXFLAGS) $(SUBDIR:%=-I ../%) -o $@ -c $^
 	$(CXX) $(CXXFLAGS) $(SUBDIR:%=-I ../%) -o $@ -c $^
