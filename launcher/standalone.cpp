@@ -1,11 +1,13 @@
 #include "checkin-bundle-parser-json.h"
 #include "checkin-bundle-parser-sip-block.h"
+#include "connection-manager-app/connection-manager-app.h"
 #include "connection-service/connection-http.h"
 #include "data-access-service/data-access-persistency.h"
 #include "data-reader-service/data-reader-sip.h"
 #include "persistency/checkin-bundle-access-fs.h"
 #include "push-data-app/push-data-app.h"
 #include "read-data-app/read-data-app.h"
+#include "server-service/server-modem.h"
 #include "worker/dispatcher.h"
 
 using namespace bird;
@@ -32,13 +34,16 @@ int main(void)
     Connection_HTTP connection_service(http, checkin_bundle_parser_json);
     Data_Access_Persistency data_access_service(checkin_bundle_access_fs);
     Data_Reader_SIP data_reader_service(sip, checkin_bundle_parser_sip_block);
+    Server_Modem server_service;
 
     //Applications
+    Connection_Manager_App connection_manager_app(server_service);
     Push_Data_App push_data_app(data_access_service, connection_service);
     Read_Data_App read_data_app(data_access_service, data_reader_service);
 
     //Dispatching
     Dispatcher dispatcher;
+    dispatcher.append(connection_manager_app);
     dispatcher.append(read_data_app);
     dispatcher.append(push_data_app);
     
