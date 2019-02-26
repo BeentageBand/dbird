@@ -18,6 +18,8 @@ namespace application
         service::Data_Reader_Interface * data_reader_service;
 
         public:
+        using worker::Message_Handler::on_loop;
+
         Read_Data_App(service::Data_Access_Interface & data_access_service,
                       service::Data_Reader_Interface & data_reader_service)
         : data_access_service(&data_access_service), data_reader_service(&data_reader_service)
@@ -26,10 +28,9 @@ namespace application
         void on_message(ipc::Message const & msg)
         {
             std::cout << "read-data-app::" << __func__ << std::endl;
-            this->handle_message(msg);
         }
 
-        void handle_message(ipc::Message const & msg)
+        void on_loop(void)
         {
             std::cout << "read-data-app::" << __func__ << std::endl;
             std::vector<bird::Checkin_Bundle> all_checkin_bundles = 
@@ -37,6 +38,8 @@ namespace application
             if(all_checkin_bundles.empty()) return ;
             // TODO: Handle error
             this->data_access_service->put_checkin_bundles(all_checkin_bundles);
+            //Do what message handle does
+            worker::Message_Handler::on_loop();
         }
     };
 
