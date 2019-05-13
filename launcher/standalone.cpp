@@ -8,6 +8,7 @@
 #include "push-data-app/push-data-app.h"
 #include "read-data-app/read-data-app.h"
 #include "server-service/server-modem.h"
+#include "sip/sip-mifare.h"
 #include "worker/dispatcher.h"
 
 using namespace bird;
@@ -28,13 +29,13 @@ int main(void)
     Checkin_Bundle_Parser_JSON checkin_bundle_parser_json;
     Checkin_Bundle_Parser_SIP_Block checkin_bundle_parser_sip_block;
     HTTP_Interface http;
-    SIP_Interface sip;
+    SIP_Mifare sip_mifare;
     Modem_Interface modem;
 
     //Services
     Connection_HTTP connection_service(http, checkin_bundle_parser_json);
     Data_Access_Persistency data_access_service(checkin_bundle_access_fs);
-    Data_Reader_SIP data_reader_service(sip, checkin_bundle_parser_sip_block);
+    Data_Reader_SIP data_reader_service(sip_mifare, checkin_bundle_parser_sip_block);
     Server_Modem server_service(modem);
 
     //Applications

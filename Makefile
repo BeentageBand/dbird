@@ -1,4 +1,12 @@
-export OUTDIR=out
+export CXX=gcc
+export CPP=g++
+export TEST_DEPS=gmock_main gtest gmock
+export DEPS=jsoncpp
+export LDFLAGS=$(shell pkg-config --libs --static $(DEPS))
+export CXXFLAGS=-std=gnu++11 $(shell pkg-config --cflags $(DEPS) $(TEST_DEPS)) 
+export OUT=out
+export BINARY=standalone slave master
+export TEST=connection-manager-app
 export SUBDIR=\
 applications \
 bird-types \
@@ -9,23 +17,42 @@ services  \
 system  \
 utilities \
 
-export CXXFLAGS+=-std=c++11 
-export BINARY=standalone slave master
-export LDFLAGS+=
+ifndef test
+test=dummy-test
+endif
 
-.PHONY : all clean $(BINARY) 
-all : $(BINARY) 
+.PHONY: all clean binary test single-test 
 
-$(BINARY) : $(BINARY:%=$(OUTDIR)/%)
+all : binary test  
 
-clean : 
-	rm $(BINARY:%=$(OUTDIR)/%.o) $(BINARY:%=$(OUTDIR)/%)
+binary : $(OUT) $(BINARY:%=$(OUT)/%) 
 
-$(OUTDIR)/% : $(OUTDIR)/%.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $<
+test : $(OUT) $(OUT)/unit-test 
+	./$(OUT)/unit-test
 
-$(BINARY:%=$(OUTDIR)/%.o) :
-	$(MAKE) -C launcher 
+single-test : $(OUT) $(OUT)/$(test)
+	./$(OUT)/$(test)
 
+clean :
+	rm -rf out
 
+$(OUT) :
+	mkdir -p $@
+
+$(TEST:%=$(OUT)/%.o) : tst 
+	make -C $<
+
+$(BINARY:%=$(OUT)/%) : $(BINARY:%=$(OUT)/%.o) 
+	$(CXX) $(CXXFLAGS) $(SUBDIRS:%=-I %) -o $@ -c $< $(LDFLAFS) 
+
+$(BINARY:%=$(OUT)/%.o) : launcher
+	make -C $<
+
+$(OUT)/$(test).o : tst/$(test).cc
+	$(CXX) $(CXXFLAGS) $(SUBDIRS:%=-I %) -o $@ -c $<
+
+$(OUT)/unit-test : $(TEST:%=$(OUT)/%.o)
+	$(CPP) $(CXXFLAGS) $(SUBDIRS:%=-I %) -o $@ $^ $(LDFLAGS) $(TEST_LDFLAGS) 
+$(OUT)/$(test) : $(OUT)/$(test).o
+	$(CPP) $(CXXFLAGS) $(SUBDIRS:%=-I %) -o $@ $^ $(LDFLAGS) $(TEST_LDFLAGS) 
 	

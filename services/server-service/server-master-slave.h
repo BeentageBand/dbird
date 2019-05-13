@@ -15,13 +15,17 @@ namespace service
 
         void bootup(void) 
         {
+            
         }
 
         void update(void)
         {
+
         }
         void handle_status(ipc::Message const & msg)
-        {}
+        {
+
+        }
         void shutdown(void) 
         {}
     };
