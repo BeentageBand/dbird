@@ -7,7 +7,7 @@ export TEST_LDFLAGS=$(shell pkg-config --libs --static $(TEST_DEPS))
 export CXXFLAGS=-std=gnu++11 $(shell pkg-config --cflags $(DEPS) $(TEST_DEPS)) 
 export OUT=out
 export BINARY=standalone slave master
-export TEST=connection-manager-app
+export TEST=connection-manager-app push-data-app
 export SUBDIRS=. \
 applications \
 bird-types \
