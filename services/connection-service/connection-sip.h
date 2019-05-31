@@ -24,7 +24,8 @@ namespace service
         {
             std::string sip_data = this->checkin_bundle_parser->parse_to_string(checkin_bundles);
             //TODO handle error
-            this->sip->write(sip_data);
+            if(!sip_data.empty())
+                this->sip->write(sip_data);
         }
     };
 }

@@ -35,6 +35,6 @@ TEST_F(ReadDataAppGTest, on_loop)
     vector<Checkin_Bundle> checkin_bundles;
     checkin_bundles.push_back(Checkin_Bundle("account_id", "timestamp"));
     EXPECT_CALL(this->data_reader_service, get_all_checkin_bundles()).WillOnce(Return(checkin_bundles));
-    EXPECT_CALL(this->data_access_service, put_checkin_bundles(_)).Times(1);
+    EXPECT_CALL(this->data_access_service, put_checkin_bundles(checkin_bundles)).Times(1);
     this->read_data.on_loop();
 }

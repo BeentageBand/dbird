@@ -2,8 +2,7 @@
 #include "services-gmock.h"
 #include "connection-manager-app/connection-manager-app.h"
 
-using namespace application;
-using namespace ::testing;
+using namespace application; using namespace ::testing;
 
 
 class ConnectionManagerAppGTest :  public Test
@@ -51,6 +50,6 @@ TEST_F(ConnectionManagerAppGTest, on_loop)
 TEST_F(ConnectionManagerAppGTest, on_message)
 {
     ipc::Message msg(0, 1);
-    EXPECT_CALL(this->server_service, handle_status(_)).Times(1);
+    EXPECT_CALL(this->server_service, handle_status(msg)).Times(1);
     this->connection_manager.on_message(msg);
 }

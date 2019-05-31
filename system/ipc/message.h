@@ -14,10 +14,20 @@ namespace ipc
         {}
 
         virtual ~Message(void){}
-        inline int get_mid(void){ return this->mid;}
-        inline int get_tid(void){ return this->tid;}
+        inline int get_mid(void) const { return this->mid;}
+        inline int get_tid(void) const { return this->tid;}
+
+        inline bool operator==(Message const & other) const
+        {
+            if (&other == this) return true;
+            return this->mid == other.get_mid() &&
+                this->tid == other.get_tid();
+        }
+
+        inline bool operator!=(Message const & other) const { return !(*this == other); }
     };
 
+    
     template<typename Payload>
     class Message_With_Payload : public Message
     {
@@ -30,5 +40,14 @@ namespace ipc
         {}
 
         inline Payload & get_payload(void) const { return this->payload;}
+
+        inline bool operator==(Message_With_Payload const & other) const
+        {
+            if (&other == this) return true;
+            return this->mid == other.get_mid() &&
+                this->tid == other.get_tid();
+        }
+
+        inline bool operator!=(Message_With_Payload const & other) const { return !(*this == other); }
     };
 }
