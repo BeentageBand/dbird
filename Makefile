@@ -3,11 +3,12 @@ export CPP=g++
 export TEST_DEPS=gmock_main gtest gmock
 export DEPS=jsoncpp
 export LDFLAGS=$(shell pkg-config --libs --static $(DEPS))
+export TEST_LDFLAGS=$(shell pkg-config --libs --static $(TEST_DEPS))
 export CXXFLAGS=-std=gnu++11 $(shell pkg-config --cflags $(DEPS) $(TEST_DEPS)) 
 export OUT=out
 export BINARY=standalone slave master
 export TEST=connection-manager-app
-export SUBDIR=\
+export SUBDIRS=. \
 applications \
 bird-types \
 launcher \

@@ -29,6 +29,6 @@ namespace ipc
         : Message(mid, tid), payload(payload)
         {}
 
-        inline Payload const & get_payload(void) const { return this->payload;}
+        inline Payload & get_payload(void) const { return this->payload;}
     };
 }
