@@ -23,10 +23,13 @@ namespace service
         {
             //TODO find right json
             std::string json = this->checkin_bundle_parser->parse_to_string(checkin_bundles);
-            this->http->open_session();
-            this->http->post(json);
-            //TODO handle error
-            this->http->close_session();
+            if (!json.empty())
+            {
+                this->http->open_session();
+                this->http->post(json);
+                //TODO handle error
+                this->http->close_session();
+            }
         }
     };
 }

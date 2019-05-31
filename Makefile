@@ -8,6 +8,7 @@ export CXXFLAGS=-std=gnu++11 $(shell pkg-config --cflags $(DEPS) $(TEST_DEPS))
 export OUT=out
 export BINARY=standalone slave master
 export TEST=\
+connection-http \
 connection-manager-app \
 connection-sip \
 push-data-app \
