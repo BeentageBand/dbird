@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "connection-manager-app-gmock.h"
+#include "services-gmock.h"
 #include "connection-manager-app/connection-manager-app.h"
 
 using namespace application;
