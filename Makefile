@@ -11,6 +11,7 @@ export TEST=\
 connection-http \
 connection-manager-app \
 connection-sip \
+data-access-persistency \
 push-data-app \
 read-data-app \
 data-reader-sip \
