@@ -13,6 +13,7 @@ connection-manager-app \
 connection-sip \
 push-data-app \
 read-data-app \
+data-reader-sip \
 
 export SUBDIRS=. \
 applications \

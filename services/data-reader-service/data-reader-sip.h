@@ -19,6 +19,7 @@ namespace service
         {}
 
         virtual ~Data_Reader_SIP(void){}
+
         std::vector<bird::Checkin_Bundle> get_all_checkin_bundles(void)
         {
             std::vector<bird::Checkin_Bundle> all_checkin_bundles;
