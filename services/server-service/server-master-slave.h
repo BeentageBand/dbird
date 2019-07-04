@@ -22,11 +22,15 @@ namespace service
         {
 
         }
+
         void handle_status(ipc::Message const & msg)
         {
 
         }
+
         void shutdown(void) 
-        {}
+        {
+
+        }
     };
 }
