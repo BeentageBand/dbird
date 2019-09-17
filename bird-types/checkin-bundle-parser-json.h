@@ -9,8 +9,8 @@ namespace bird
 {
 class CheckinBundleParserJSON : public CheckinBundleParser
 {
-	static char const * const ACCOUNT_KEY = "account";
-	static char const * const TIME_KEY = "timestamp";
+	static char const * const ACCOUNT_KEY;
+	static char const * const TIME_KEY;
 
 public:
 	CheckinBundle parse_to_checkin_bundle(std::string const & data)
@@ -62,6 +62,8 @@ private:
 		return std::move(json_value);
 	}
 };
+	char const * const CheckinBundleParserJSON::ACCOUNT_KEY = "account";
+	char const * const CheckinBundleParserJSON::TIME_KEY = "timestamp";
 }
 
 #endif /* CHECKIN_BUNDLE_PARSER_JSON_H_ */

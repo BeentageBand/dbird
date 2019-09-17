@@ -10,19 +10,15 @@ namespace persistency
 {
     class CheckinBundleAccessFS : public CheckinBundleAccess
     {
-        static std::string const FILENAME = "checkin-bundle";
-        static std::string const ACCOUNT_KEY = "account";
-        static std::string const TIME_KEY = "timestamp";
+        static std::string const FILENAME;
 
         DAL * dal;
         bird::CheckinBundleParserJSON * json_parser;
-        std::deque<bird::CheckinBundle> queue;
+        std::vector<bird::CheckinBundle> queue;
 
         public:
         CheckinBundleAccessFS(DAL & dal, bird::CheckinBundleParserJSON & json_parser)
-        : dal(&dal),
-		  json_parser(),
-		  queue() {}
+        : dal(&dal), json_parser(&json_parser), queue() {}
 
         bool empty(void)
         {
@@ -54,8 +50,8 @@ namespace persistency
         {
         	if (!this->queue.empty())
         	{
-				Json::Value commit_data = checkin_bundle_to_json();
-				dal->put_json(commit_data, FILENAME);
+        		std::string file_data = this->json_parser->parse_to_string(this->queue);
+        		this->dal->put_file_data(file_data, FILENAME);
         	}
 
         }
@@ -66,30 +62,10 @@ namespace persistency
         {
         	if (!this->queue.empty()) return;
 
-        	Json::Value json = this->dal->get_json(FILENAME);
-
-        	if (json.isArray())
-        	{
-        		for (auto & json_cb : json)
-        		{
-        			Json::Value account_json = json_cb.get(ACCOUNT_KEY.c_str(), "");
-        			Json::Value time_json = json_cb.get(TIME_KEY.c_str(), "");
-        			bird::CheckinBundle new_checkin_bundle(account_json.asString(), time_json.asString());
-        			this->queue.push_back(new_checkin_bundle);
-        		}
-        	}
+        	std::string file_data = dal->get_file_data(FILENAME);
+        	this->queue = this->json_parser->parse_to_checkin_bundles(file_data);
         }
-
-        Json::Value && checkin_bundle_to_json()
-        {
-        	Json::Value json_value;
-        	for (auto & cb : this->queue)
-        	{
-        		json_value.append(json_cb);
-
-        	}
-        	return json_value;
-        }
-
     };
+
+    std::string const CheckinBundleAccessFS::FILENAME = "checkin-bundle";
 }

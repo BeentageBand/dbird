@@ -7,7 +7,7 @@
 
 #ifndef DAL_H_
 #define DAL_H_
-#include "json/json.h"
+#include <fstream>
 
 namespace persistency {
 class DAL {
@@ -18,21 +18,21 @@ public:
 
 	virtual ~DAL(void) {}
 
-	virtual Json::Value get_json(const std::string &filename)
+	virtual std::string get_file_data(const std::string &filename)
 	{
 		std::ifstream ifs;
+		std::string data;
 		ifs.open(filename, std::fstream::in);
-		Json::Value json;
-		ifs >> json;
+		ifs >> data;
 		ifs.close();
-		return json;
+		return data;
 	}
 
-	virtual void put_json(const Json::Value &json, const std::string &filename)
+	virtual void put_file_data(std::string const & data, const std::string &filename)
 	{
 		std::ofstream ofs;
 		ofs.open(filename, std::ofstream::out | std::ofstream::app);
-		ofs << json;
+		ofs << data;
 		ofs.close();
 	}
 };

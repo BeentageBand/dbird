@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 #include <string>
 #include <vector>
 #include "checkin-bundle.h"
@@ -8,7 +9,7 @@ namespace bird
 {
     class CheckinBundleParserSIPBlock : public CheckinBundleParser
     {
-    	static char const DELIMITER = ',';
+    	static char const DELIMITER;
 
         public:
         CheckinBundle parse_to_checkin_bundle(std::string const & data)
@@ -38,6 +39,11 @@ namespace bird
             return ss.str();
         }
 
+        std::string parse_to_string(CheckinBundle const & checkin_bundle)
+        {
+        	return this->to_line(checkin_bundle);
+        }
+
         private:
         CheckinBundle to_checkin_bundle(std::string const & data)
         {
@@ -58,4 +64,7 @@ namespace bird
         	return line;
         }
     };
+
+
+    char const CheckinBundleParserSIPBlock::DELIMITER = ',';
 }
