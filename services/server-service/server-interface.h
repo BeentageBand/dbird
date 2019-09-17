@@ -3,10 +3,10 @@
 
 namespace service
 {
-    class Server_Interface
+    class ServerInterface
     {
         public:
-        virtual ~Server_Interface(void) {}
+        virtual ~ServerInterface(void) {}
 
         virtual void bootup(void) = 0;
         virtual void update(void) = 0;

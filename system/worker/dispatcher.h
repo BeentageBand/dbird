@@ -8,8 +8,8 @@ namespace worker
     class Dispatcher : public Bundle
     {
         private:
-        typedef std::pair<int, Bundle *> Bundle_Client;
-        std::vector<Bundle_Client> bundles;
+        typedef std::pair<int, Bundle *> BundleClient;
+        std::vector<BundleClient> bundles;
         int bundle_id;
         public:
         Dispatcher(void)

@@ -5,15 +5,15 @@
 
 namespace bird
 {
-    class Checkin_Bundle_Parser_SIP_Block : public Checkin_Bundle_Parser
+    class CheckinBundleParserSIPBlock : public CheckinBundleParser
     {
         public:
-        Checkin_Bundle parse_to_checkin_bundle(std::string const & data)
+        CheckinBundle parse_to_checkin_bundle(std::string const & data)
         {
-            return Checkin_Bundle("account_id", "00/00/00-00:00:00");
+            return CheckinBundle("account_id", "00/00/00-00:00:00");
         }
 
-        std::string parse_to_string(std::vector<Checkin_Bundle> const & checkin_bundles)
+        std::string parse_to_string(std::vector<CheckinBundle> const & checkin_bundles)
         {
             std::string data;
             for(auto & checkin_bundle : checkin_bundles)

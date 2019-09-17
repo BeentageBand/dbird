@@ -3,10 +3,10 @@
 
 namespace protocols
 {
-    class SIP_Interface
+    class SIPInterface
     {
         public:
-        virtual ~SIP_Interface(void){}
+        virtual ~SIPInterface(void){}
 
         virtual bool empty(void) = 0;
         virtual std::string read(void) = 0;

@@ -5,14 +5,14 @@
 
 namespace worker
 {
-    class Message_Handler : public Bundle
+    class MessageHandler : public Bundle
     {
         public:
-        Message_Handler(void)
+        MessageHandler(void)
         : Bundle()
         {}
 
-        virtual ~Message_Handler(void){}
+        virtual ~MessageHandler(void){}
 
         void on_start(void) {}
 

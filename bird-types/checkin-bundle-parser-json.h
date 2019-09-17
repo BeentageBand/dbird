@@ -5,18 +5,18 @@
 
 namespace bird
 {
-    class Checkin_Bundle_Parser_JSON : public Checkin_Bundle_Parser
+    class CheckinBundleParserJSON : public CheckinBundleParser
     {
         public:
-        Checkin_Bundle parse_to_checkin_bundle(std::string const & data)
+        CheckinBundle parse_to_checkin_bundle(std::string const & data)
         {
             //TODO implement 
             std::string account_id = "account_id";
             std::string timestamp = "00/00/00-00:00:00";
-            return Checkin_Bundle(account_id, timestamp);
+            return CheckinBundle(account_id, timestamp);
         }
 
-        std::string parse_to_string(std::vector<Checkin_Bundle> const & checkin_bundles)
+        std::string parse_to_string(std::vector<CheckinBundle> const & checkin_bundles)
         {
             std::string json_data;
             for(auto & checkin_bundle : checkin_bundles)

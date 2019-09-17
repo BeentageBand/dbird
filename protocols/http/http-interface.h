@@ -3,10 +3,10 @@
 
 namespace protocols
 {
-    class HTTP_Interface
+    class HTTPInterface
     {
         public:
-        virtual ~HTTP_Interface(void) {}
+        virtual ~HTTPInterface(void) {}
         virtual void open_session(void) {}
         virtual void post(std::string const & data) {}
         virtual void close_session(void) {}

@@ -9,19 +9,19 @@
 
 namespace application
 {
-    typedef meta::EL<CLK_TIMER_TOUT_MID, meta::Null> Read_Data_TL;
+    typedef meta::EL<CLK_TIMER_TOUT_MID, meta::Null> ReadDataTL;
 
-    class Read_Data_App : public worker::Message_Handler
+    class ReadDataApp : public worker::MessageHandler
     {
         private:
-        service::Data_Access_Interface * data_access_service;
-        service::Data_Reader_Interface * data_reader_service;
+        service::DataAccessInterface * data_access_service;
+        service::DataReaderInterface * data_reader_service;
 
         public:
-        using worker::Message_Handler::on_loop;
+        using worker::MessageHandler::on_loop;
 
-        Read_Data_App(service::Data_Access_Interface & data_access_service,
-                      service::Data_Reader_Interface & data_reader_service)
+        ReadDataApp(service::DataAccessInterface & data_access_service,
+                      service::DataReaderInterface & data_reader_service)
         : data_access_service(&data_access_service), data_reader_service(&data_reader_service)
         {}
 
@@ -33,13 +33,13 @@ namespace application
         void on_loop(void)
         {
             std::cout << "read-data-app::" << __func__ << std::endl;
-            std::vector<bird::Checkin_Bundle> all_checkin_bundles = 
+            std::vector<bird::CheckinBundle> all_checkin_bundles =
                                             this->data_reader_service->get_all_checkin_bundles();
             if(all_checkin_bundles.empty()) return ;
             // TODO: Handle error
             this->data_access_service->put_checkin_bundles(all_checkin_bundles);
             //Do what message handle does
-            worker::Message_Handler::on_loop();
+            worker::MessageHandler::on_loop();
         }
     };
 

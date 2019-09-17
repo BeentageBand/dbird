@@ -4,9 +4,10 @@
 
 namespace service
 {
-    class Data_Reader_Interface
+    class DataReaderInterface
     {
         public:
-        virtual std::vector<bird::Checkin_Bundle> get_all_checkin_bundles(void) = 0;
+    	virtual ~DataReaderInterface(void) {}
+        virtual std::vector<bird::CheckinBundle> get_all_checkin_bundles(void) = 0;
     };
 }

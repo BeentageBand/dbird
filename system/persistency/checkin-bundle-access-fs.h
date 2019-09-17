@@ -1,28 +1,44 @@
 #pragma once
 #include <deque>
+#include <fstream>
 #include "checkin-bundle.h"
 #include "checkin-bundle-access.h"
+#include "dal.h"
+#include "json/json.h"
 
 namespace persistency
 {
-    class Checkin_Bundle_Access_FS : public Checkin_Bundle_Access
+    class CheckinBundleAccessFS : public CheckinBundleAccess
     {
-        private:
-        std::deque<bird::Checkin_Bundle> queue;
+        static std::string const FILENAME = "checkin-bundle";
+        static std::string const ACCOUNT_KEY = "account";
+        static std::string const TIME_KEY = "timestamp";
+
+        DAL * dal;
+        std::deque<bird::CheckinBundle> queue;
+
         public:
+        CheckinBundleAccessFS(DAL & dal) : dal(&dal), queue() {}
+
         bool empty(void)
         {
-            return this->queue.empty();
+
+        	update_queue();
+        	return this->queue.empty();
         }
 
-        void push(bird::Checkin_Bundle & checkin_bundle)
+        void push(bird::CheckinBundle & checkin_bundle)
         {
-            this->queue.push_front(checkin_bundle);
+        	update_queue();
+        	this->queue.push_back(checkin_bundle);
+
         }
 
-        bird::Checkin_Bundle pop(void)
+        bird::CheckinBundle pop(void)
         {
-            bird::Checkin_Bundle checkin_bundle("", "");  
+            bird::CheckinBundle checkin_bundle("", "");
+            update_queue();
+
             if(! this->queue.empty())
             {
                 checkin_bundle = this->queue.back();
@@ -30,6 +46,50 @@ namespace persistency
             }
             return checkin_bundle;
         }
-        void commit(void) {}
+
+        void commit(void)
+        {
+        	if (!this->queue.empty())
+        	{
+				Json::Value commit_data = checkin_bundle_to_json();
+				dal->put_json(commit_data, FILENAME);
+        	}
+
+        }
+
+        private:
+
+        void update_queue(void)
+        {
+        	if (!this->queue.empty()) return;
+
+        	Json::Value json = this->dal->get_json(FILENAME);
+
+        	if (json.isArray())
+        	{
+        		for (auto & json_cb : json)
+        		{
+        			Json::Value account_json = json_cb.get(ACCOUNT_KEY.c_str(), "");
+        			Json::Value time_json = json_cb.get(TIME_KEY.c_str(), "");
+        			bird::CheckinBundle new_checkin_bundle(account_json.asString(), time_json.asString());
+        			this->queue.push_back(new_checkin_bundle);
+        		}
+        	}
+        }
+
+        Json::Value && checkin_bundle_to_json()
+        {
+        	Json::Value json_value;
+        	for (auto & cb : this->queue)
+        	{
+        		Json::Value json_cb;
+        		json_cb[ACCOUNT_KEY] = Json::Value(cb.get_account_id());
+        		json_cb[TIME_KEY] = Json::Value(cb.get_timestamp());
+        		json_value.append(json_cb);
+
+        	}
+        	return json_value;
+        }
+
     };
 }

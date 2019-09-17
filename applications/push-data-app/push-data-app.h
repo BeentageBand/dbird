@@ -10,17 +10,17 @@
 
 namespace application
 {
-    typedef meta::EL<CLK_TIMER_TOUT_MID, meta::Null> Push_Data_TL;
+    typedef meta::EL<CLK_TIMER_TOUT_MID, meta::Null> PushDataTL;
 
-    class Push_Data_App : public worker::Message_Handler
+    class PushDataApp : public worker::MessageHandler
     {
         private:
-        service::Data_Access_Interface * data_access_service; 
-        service::Connection_Interface * connection_service;
+        service::DataAccessInterface * data_access_service;
+        service::ConnectionInterface * connection_service;
 
         public:
-        Push_Data_App(service::Data_Access_Interface & data_access_service, 
-                      service::Connection_Interface & connection_service)
+        PushDataApp(service::DataAccessInterface & data_access_service,
+                      service::ConnectionInterface & connection_service)
         : data_access_service(&data_access_service), connection_service(&connection_service)
         {}
 
@@ -33,7 +33,7 @@ namespace application
         void handle_message(ipc::Message const & msg)
         {
             std::cout << "push-data-app::" << __func__ << std::endl;
-            std::vector<bird::Checkin_Bundle> all_checkin_bundles = 
+            std::vector<bird::CheckinBundle> all_checkin_bundles =
                                             this->data_access_service->get_all_checkin_bundles();
             if(all_checkin_bundles.empty()) return ;
             // TODO: Handle error

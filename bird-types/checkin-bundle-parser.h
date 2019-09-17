@@ -5,10 +5,11 @@
 
 namespace bird
 {
-    class Checkin_Bundle_Parser
+    class CheckinBundleParser
     {
         public:
-        virtual Checkin_Bundle parse_to_checkin_bundle(std::string const & data) = 0;
-        virtual std::string parse_to_string(std::vector<Checkin_Bundle> const & checkin_bundles) = 0;
+    	virtual ~CheckinBundleParser(void) {}
+        virtual CheckinBundle parse_to_checkin_bundle(std::string const & data) = 0;
+        virtual std::string parse_to_string(std::vector<CheckinBundle> const & checkin_bundles) = 0;
     };
 }

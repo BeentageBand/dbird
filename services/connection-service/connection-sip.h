@@ -7,20 +7,20 @@
 
 namespace service
 {
-    class Connection_SIP : public Connection_Interface
+    class ConnectionSIP : public ConnectionInterface
     {
         private:
-        size_t const PACKAGE_SIZE_BYTES = 100;
-        protocols::SIP_Interface * sip;
-        bird::Checkin_Bundle_Parser * checkin_bundle_parser;
+        size_t const PACKAGESIZEBYTES = 100;
+        protocols::SIPInterface * sip;
+        bird::CheckinBundleParser * checkin_bundle_parser;
         public:
-        Connection_SIP(protocols::SIP_Interface & sip, bird::Checkin_Bundle_Parser & checkin_bundle_parser)
+        ConnectionSIP(protocols::SIPInterface & sip, bird::CheckinBundleParser & checkin_bundle_parser)
         : sip(&sip), checkin_bundle_parser(&checkin_bundle_parser)
         {}
 
-        virtual ~Connection_SIP(void){}
+        virtual ~ConnectionSIP(void){}
 
-        void send_checkin_bundles(std::vector<bird::Checkin_Bundle> & checkin_bundles)
+        void send_checkin_bundles(std::vector<bird::CheckinBundle> & checkin_bundles)
         {
             std::string sip_data = this->checkin_bundle_parser->parse_to_string(checkin_bundles);
             //TODO handle error

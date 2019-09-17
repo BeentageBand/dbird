@@ -4,10 +4,10 @@
 
 namespace service
 {
-    class Connection_Interface
+    class ConnectionInterface
     {
         public:
-        virtual ~Connection_Interface(void){}
-        virtual void send_checkin_bundles(std::vector<bird::Checkin_Bundle> & checkin_bundles) = 0;
+        virtual ~ConnectionInterface(void){}
+        virtual void send_checkin_bundles(std::vector<bird::CheckinBundle> & checkin_bundles) = 0;
     };
 }

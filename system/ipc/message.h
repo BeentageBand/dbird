@@ -29,25 +29,25 @@ namespace ipc
 
     
     template<typename Payload>
-    class Message_With_Payload : public Message
+    class MessageWithPayload : public Message
     {
         private:
         Payload const payload;
 
         public:
-        Message_With_Payload(int const mid, int const tid, Payload const & payload)
+        MessageWithPayload(int const mid, int const tid, Payload const & payload)
         : Message(mid, tid), payload(payload)
         {}
 
         inline Payload & get_payload(void) const { return this->payload;}
 
-        inline bool operator==(Message_With_Payload const & other) const
+        inline bool operator==(MessageWithPayload const & other) const
         {
             if (&other == this) return true;
             return this->mid == other.get_mid() &&
                 this->tid == other.get_tid();
         }
 
-        inline bool operator!=(Message_With_Payload const & other) const { return !(*this == other); }
+        inline bool operator!=(MessageWithPayload const & other) const { return !(*this == other); }
     };
 }

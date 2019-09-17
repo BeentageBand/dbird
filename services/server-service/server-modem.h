@@ -5,12 +5,12 @@
 
 namespace service
 {
-   class Server_Modem : public Server_Interface 
+   class ServerModem : public ServerInterface
    {
        private:
-       protocols::Modem_Interface * modem;
+       protocols::ModemInterface * modem;
        public:
-       Server_Modem(protocols::Modem_Interface & modem)
+       ServerModem(protocols::ModemInterface & modem)
        : modem(&modem)
        {}
        void bootup(void) 

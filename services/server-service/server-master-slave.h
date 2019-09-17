@@ -4,12 +4,12 @@
 
 namespace service
 {
-    class Server_Master_Slave : public Server_Interface
+    class ServerMasterSlave : public ServerInterface
     {
         private:
-        protocols::SIP_Interface * sip;
+        protocols::SIPInterface * sip;
         public:
-        Server_Master_Slave(protocols::SIP_Interface & sip)
+        ServerMasterSlave(protocols::SIPInterface & sip)
         : sip(&sip)
         {}
 

@@ -2,8 +2,9 @@
 
 namespace protocols
 {
-    class Modem_Interface
+    class ModemInterface
     {
         public:
+    	virtual ~ModemInterface(void) {}
     };
 }

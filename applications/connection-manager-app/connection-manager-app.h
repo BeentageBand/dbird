@@ -7,17 +7,17 @@
 
 namespace application
 {
-    typedef meta::EL<CONNECTION_MGR_STATUS_MID, meta::Null> Connection_Manager_App_EL;
-    class Connection_Manager_App :  public worker::Message_Handler
+    typedef meta::EL<CONNECTION_MGR_STATUS_MID, meta::Null> ConnectionManagerAppEL;
+    class ConnectionManagerApp :  public worker::MessageHandler
     {
         private:
-        service::Server_Interface * server_service;
+        service::ServerInterface * server_service;
         public:
-        Connection_Manager_App(service::Server_Interface & server_service)
+        ConnectionManagerApp(service::ServerInterface & server_service)
         : server_service(&server_service)
         {}
 
-        virtual ~Connection_Manager_App(void) {}
+        virtual ~ConnectionManagerApp(void) {}
 
         void on_start(void)
         {

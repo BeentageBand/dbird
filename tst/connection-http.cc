@@ -14,7 +14,7 @@ class ConnectionHTTPGTest : public Test
     public:
     NiceMock<HTTPMock> http_protocol;
     NiceMock<CheckinBundleParserMock> checkin_bundle_parser;
-    Connection_HTTP connection_http_service;
+    ConnectionHTTP connection_http_service;
 
     public:
     ConnectionHTTPGTest(void)
@@ -33,9 +33,9 @@ class ConnectionHTTPGTest : public Test
  */
 TEST_F(ConnectionHTTPGTest, send_checkin_bundles_when_not_empty)
 {
-    vector<Checkin_Bundle> checkin_bundles;
+    vector<CheckinBundle> checkin_bundles;
     string checkin_data("account_id timestamp");
-    checkin_bundles.push_back(Checkin_Bundle("account_id", "timestamp"));
+    checkin_bundles.push_back(CheckinBundle("account_id", "timestamp"));
     EXPECT_CALL(this->checkin_bundle_parser, parse_to_string(checkin_bundles)).WillOnce(Return(checkin_data));
     EXPECT_CALL(this->http_protocol, open_session()).Times(1);
     EXPECT_CALL(this->http_protocol, post(checkin_data)).Times(1);
@@ -50,7 +50,7 @@ TEST_F(ConnectionHTTPGTest, send_checkin_bundles_when_not_empty)
  */
 TEST_F(ConnectionHTTPGTest, send_checkin_bundles_when_empty)
 {
-    vector<Checkin_Bundle> checkin_bundles;
+    vector<CheckinBundle> checkin_bundles;
     string checkin_data;
     EXPECT_CALL(this->checkin_bundle_parser, parse_to_string(checkin_bundles)).WillOnce(Return(checkin_data));
     EXPECT_CALL(this->http_protocol, open_session()).Times(0);

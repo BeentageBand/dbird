@@ -5,24 +5,24 @@
 
 namespace persistency
 {
-    class Checkin_Bundle_Access_Volatile : public Checkin_Bundle_Access
+    class CheckinBundleAccessVolatile : public CheckinBundleAccess
     {
         private:
-        std::deque<bird::Checkin_Bundle> queue;
+        std::deque<bird::CheckinBundle> queue;
         public:
         bool empty(void)
         {
             return this->queue.empty();
         }
 
-        void push(bird::Checkin_Bundle & checkin_bundle)
+        void push(bird::CheckinBundle & checkin_bundle)
         {
             this->queue.push_front(checkin_bundle);
         }
 
-        bird::Checkin_Bundle pop(void)
+        bird::CheckinBundle pop(void)
         {
-            bird::Checkin_Bundle checkin_bundle("", "");  
+            bird::CheckinBundle checkin_bundle("", "");
             if(! this->queue.empty())
             {
                 checkin_bundle = this->queue.back();

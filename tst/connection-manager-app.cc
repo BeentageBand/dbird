@@ -9,7 +9,7 @@ class ConnectionManagerAppGTest :  public Test
 {
     public:
     NiceMock<ServerMock> server_service;
-    Connection_Manager_App connection_manager;
+    ConnectionManagerApp connection_manager;
 
     public:
     ConnectionManagerAppGTest(void)

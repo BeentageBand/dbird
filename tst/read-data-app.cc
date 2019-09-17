@@ -13,7 +13,7 @@ class ReadDataAppGTest : public Test
     public:
     NiceMock<DataAccessMock> data_access_service;
     NiceMock<DataReaderMock> data_reader_service;
-    Read_Data_App read_data;
+    ReadDataApp read_data;
 
     public:
     ReadDataAppGTest(void)
@@ -32,8 +32,8 @@ class ReadDataAppGTest : public Test
  */
 TEST_F(ReadDataAppGTest, on_loop)
 {
-    vector<Checkin_Bundle> checkin_bundles;
-    checkin_bundles.push_back(Checkin_Bundle("account_id", "timestamp"));
+    vector<CheckinBundle> checkin_bundles;
+    checkin_bundles.push_back(CheckinBundle("account_id", "timestamp"));
     EXPECT_CALL(this->data_reader_service, get_all_checkin_bundles()).WillOnce(Return(checkin_bundles));
     EXPECT_CALL(this->data_access_service, put_checkin_bundles(checkin_bundles)).Times(1);
     this->read_data.on_loop();

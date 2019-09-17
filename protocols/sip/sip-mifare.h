@@ -5,7 +5,7 @@
 
 namespace protocols
 {
-    class SIP_Mifare : public protocols::SIP_Interface
+    class SIPMifare : public protocols::SIPInterface
     {
         private:
         std::deque<std::string> block_queue;

@@ -3,19 +3,20 @@
 
 namespace protocols
 {
-    class SIP_Net : public SIP_Interface
+    class SIPNet : public SIPInterface
     {
         public:
 
         bool empty(void)
         {
-
+        	return true;
         }
 
         std::string read(void)
         {
 
         }
+
         void write(std::string const & data)
         {
 
