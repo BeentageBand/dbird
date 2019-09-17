@@ -2,9 +2,9 @@
 #include <deque>
 #include <fstream>
 #include "checkin-bundle.h"
+#include "checkin-bundle-parser-json.h"
 #include "checkin-bundle-access.h"
 #include "dal.h"
-#include "json/json.h"
 
 namespace persistency
 {
@@ -15,14 +15,17 @@ namespace persistency
         static std::string const TIME_KEY = "timestamp";
 
         DAL * dal;
+        bird::CheckinBundleParserJSON * json_parser;
         std::deque<bird::CheckinBundle> queue;
 
         public:
-        CheckinBundleAccessFS(DAL & dal) : dal(&dal), queue() {}
+        CheckinBundleAccessFS(DAL & dal, bird::CheckinBundleParserJSON & json_parser)
+        : dal(&dal),
+		  json_parser(),
+		  queue() {}
 
         bool empty(void)
         {
-
         	update_queue();
         	return this->queue.empty();
         }
@@ -82,9 +85,6 @@ namespace persistency
         	Json::Value json_value;
         	for (auto & cb : this->queue)
         	{
-        		Json::Value json_cb;
-        		json_cb[ACCOUNT_KEY] = Json::Value(cb.get_account_id());
-        		json_cb[TIME_KEY] = Json::Value(cb.get_timestamp());
         		json_value.append(json_cb);
 
         	}

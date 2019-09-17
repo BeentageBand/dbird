@@ -14,7 +14,7 @@ namespace protocols
 
         std::string read(void)
         {
-
+        	return std::string();
         }
 
         void write(std::string const & data)

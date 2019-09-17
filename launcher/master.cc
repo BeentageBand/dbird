@@ -9,6 +9,7 @@
 #include "read-data-app/read-data-app.h"
 #include "server-service/server-master-slave.h"
 #include "server-service/server-modem.h"
+#include "sip/sip-net.h"
 #include "worker/dispatcher.h"
 
 using namespace bird;
@@ -23,27 +24,28 @@ int main(void)
 {
     //System 
     //TODO system implementation
+	DAL dal;
 
     // Modules
-    Checkin_Bundle_Access_FS checkin_bundle_access_fs;
-    Checkin_Bundle_Parser_JSON checkin_bundle_parser_json;
-    Checkin_Bundle_Parser_SIP_Block checkin_bundle_parser_sip_block;
-    HTTP_Interface http;
-    SIP_Interface sip;
-    Modem_Interface modem;
+    CheckinBundleParserJSON checkin_bundle_parser_json;
+    CheckinBundleParserSIPBlock checkin_bundle_parser_sip_block;
+    CheckinBundleAccessFS checkin_bundle_access_fs(dal, checkin_bundle_parser_json);
+    HTTPInterface http;
+    SIPNet sip_net;
+    ModemInterface modem;
 
     //Services
-    Connection_HTTP connection_service(http, checkin_bundle_parser_json);
-    Data_Access_Persistency data_access_service(checkin_bundle_access_fs);
-    Data_Reader_SIP data_reader_service(sip, checkin_bundle_parser_sip_block);
-    Server_Master_Slave server_master_slave_service(sip);
-    Server_Modem server_modem_service(modem);
+    ConnectionHTTP connection_service(http, checkin_bundle_parser_json);
+    DataAccessPersistency data_access_service(checkin_bundle_access_fs);
+    DataReaderSIP data_reader_service(sip_net, checkin_bundle_parser_sip_block);
+    ServerMasterSlave server_master_slave_service(sip_net);
+    ServerModem server_modem_service(modem);
 
     //Applications
-    Connection_Manager_App connection_mgr_modem_app(server_modem_service);
-    Connection_Manager_App connection_mgr_mst_slv_app(server_master_slave_service);
-    Push_Data_App push_data_app(data_access_service, connection_service);
-    Read_Data_App read_data_app(data_access_service, data_reader_service);
+    ConnectionManagerApp connection_mgr_modem_app(server_modem_service);
+    ConnectionManagerApp connection_mgr_mst_slv_app(server_master_slave_service);
+    PushDataApp push_data_app(data_access_service, connection_service);
+    ReadDataApp read_data_app(data_access_service, data_reader_service);
 
     Worker workers[] = {Worker(push_data_app), Worker(read_data_app)};
 

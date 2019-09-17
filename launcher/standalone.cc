@@ -1,3 +1,4 @@
+#include <memory>
 #include "injection/standalone-component.h"
 #include "worker/dispatcher.h"
 
@@ -17,9 +18,9 @@ int main(void)
     Component<StandaloneComponent> standalone_component;
 
     //Applications
-    std::shared_ptr<Connection_Manager_App> connection_manager_app;
-    std::shared_ptr<Push_Data_App> push_data_app;
-    std::shared_ptr<Read_Data_App> read_data_app;
+    std::shared_ptr<ConnectionManagerApp> connection_manager_app;
+    std::shared_ptr<PushDataApp> push_data_app;
+    std::shared_ptr<ReadDataApp> read_data_app;
 
     standalone_component.build(connection_manager_app);
     standalone_component.build(push_data_app);
