@@ -2,7 +2,7 @@
 #include <vector>
 #include "bird-types-gmock.h"
 #include "protocols-gmock.h"
-#include "connection-service/connection-http.h"
+#include "connection-http.h"
 
 using namespace ::testing;
 using namespace bird;

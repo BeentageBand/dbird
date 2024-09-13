@@ -1,7 +1,7 @@
 #pragma once
 #include "gmock/gmock.h"
-#include "http/http-interface.h"
-#include "sip/sip-interface.h"
+#include "http-interface.h"
+#include "sip-interface.h"
 
 class HTTPMock : public protocols::HTTPInterface
 {

@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "connection-interface.h"
-#include "http/http-interface.h"
+#include "http-interface.h"
 
 namespace service
 {

@@ -62,3 +62,17 @@ dkms.conf
 
 # MacOS
 .DS_Store
+
+# Autotools
+.deps
+configure
+*.pc
+*.m4
+config.log
+config.status
+libtool
+Makefile.in
+Makefile
+autom4te.cache
+build-aux
+.dirstamp

@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_NAME@
+Description: Mifare RFID Forwarder
+URL: https://github.com/BeentageBand/dbird.git
+Version: @PACKAGE_VERSION@
+Requires: @DBIRD_PKG_REQ@
+
+Cflags: -I${includedir}
+Libs: -L${libdir} -ldbird-@PACKAGE_VERSION_MAJOR@.@PACKAGE_VERSION_MINOR@.@PACKAGE_VERSION_MICRO@
